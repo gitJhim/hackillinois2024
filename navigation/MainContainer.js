@@ -7,14 +7,14 @@ import {View, Image, StyleSheet} from 'react-native';
 import HomeScreen from './Screens/HomeScreen';
 import DetailsScreen from './Screens/DetailsScreen';
 import SettingScreen from './Screens/SettingScreen';
-import EggScreen from './Screens/EggScreen';
-import Hatchery from '../app/Hatchery';
-import { Title } from 'react-native-paper';
 
-const homeName = "Garden";
-const detailsName = "Details";
-const settingsName = "User";
-const eggName = "Egg";
+import Hatchery from './Screens/Hatchery';
+import Hatchery from '../app/Hatchery';
+import Garden from './Screens/Garden';
+
+const homeName = "Hatchery";
+const detailsName = "Garden";
+const settingsName = "Settings";
 
 const eggImg = require("../assets/egg-outline.png");
 const eggImgFilled = require("../assets/egg-filled.png");
@@ -31,6 +31,7 @@ function MainContainer() {
         notification: '#FFFFFF'
     },
   };
+
   return (
     <NavigationContainer theme={nTheme}>
       <Tab.Navigator

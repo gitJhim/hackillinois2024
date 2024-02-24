@@ -1,13 +1,15 @@
 // NestWithEgg.js
 import React, {useState} from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Button, TextInput, Image } from 'react-native';
+import { Pressable, View, StyleSheet, TouchableOpacity, Text, Button, TextInput, Image } from 'react-native';
 import Modal from "react-native-modal";
+import { useAppContext } from '../context/AppContext';
+import { PET_IMAGES } from '../utils/petutils';
 
 const nestImage = require("../assets/nest.png"); // Replace with your nest image path
-const eggImage = require("../assets/egg.png"); // Replace with your egg image path
+const eggImage = require("../assets/hatchery-egg.png"); // Replace with your egg image path
 
-const NestWithEgg = ({ name, angle }) => {
-  
+const NestWithEgg = ({ id, name, angle, removeFunc, hatchEggFunc }) => {  
+  const {state, dispatch} = useAppContext();
   const [isModalVisible, setModalVisible] = useState(false);  
   const eggStyle = {
     transform: [{ rotate: `${angle}deg` }],
@@ -15,6 +17,17 @@ const NestWithEgg = ({ name, angle }) => {
   
   const toggleModal = () => {
     setModalVisible(!isModalVisible)
+  }
+
+  const removeEgg = () => {
+    removeFunc()
+    toggleModal()
+  }
+
+  const hatchEgg = () => {
+    toggleModal()
+    dispatch({ type: "ADD_PET", payload: { id: id, name: name, image: PET_IMAGES[Math.floor(Math.random() * PET_IMAGES.length)] } })  
+    removeEgg()
   }
 
   return (
@@ -32,7 +45,15 @@ const NestWithEgg = ({ name, angle }) => {
     <Modal isVisible={isModalVisible} backdropOpacity={0.3}>
         <View style={styles.modalView}>
         <Text style={styles.modalHeader}>{name}</Text>
-        <Button title="Done" onPress={toggleModal} />
+          <Pressable style={styles.button} onPress={hatchEgg}>
+            <Text style={styles.text}>Hatch Egg!</Text>
+          </Pressable>
+          <Pressable style={styles.button} onPress={removeEgg}>
+            <Text style={styles.text}>Remove</Text>
+          </Pressable>
+          <Pressable style={styles.button} onPress={toggleModal}>
+            <Text style={styles.text}>Done</Text>
+          </Pressable>
         </View>
     </Modal>
     </>
@@ -65,8 +86,8 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 10,
-    backgroundColor: 'white',
-    borderRadius: 15,
+    backgroundColor: '#4F518C',
+    borderRadius: 4,
     padding: 20,
     shadowColor: '#000',
     shadowOffset: {
@@ -78,11 +99,23 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalHeader: {
-    fontSize: 18,
-    fontVariant: "bold"
+    fontSize: 24,
+    fontVariant: "bold",
+    color: 'white',
   },
   modalContent: {
     alignItems: 'center'
+  },
+  button: {
+    alignItems: 'center',
+    margin: 4,
+    padding: 8,
+    backgroundColor: 'white',
+    borderRadius: 4,
+  },
+  text: {
+    fontSize: 16,
+    color: '#4F518c',
   },
 });
 

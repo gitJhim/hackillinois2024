@@ -3,7 +3,10 @@ import React, { createContext, useContext, useReducer } from 'react';
 const AppContext = createContext();
 
 const initialState = {
+  currID: 0,
+  currHatching: -1,
   eggs: [],
+  pets: []
 };
 
 const appReducer = (state, action) => {
@@ -12,11 +15,22 @@ const appReducer = (state, action) => {
       return {
         ...state,
         eggs: [...state.eggs, action.payload],
+        currID: state.currID + 1
       };
     case 'REMOVE_EGG':
       return {
         ...state,
-        eggs: state.tasks.filter(eggs => eggs.id !== action.payload),
+        eggs: state.eggs.filter(egg => egg.id !== action.payload.id),
+      };
+    case 'ADD_PET':
+      return {
+        ...state,
+        pets: [...state.pets, action.payload],
+      };
+    case 'SET_HATCHING':
+      return {
+        ...state,
+        currHatching: action.payload.id
       };
     default:
       return state;
