@@ -6,7 +6,7 @@ import Modal from "react-native-modal";
 const nestImage = require("../assets/nest.png"); // Replace with your nest image path
 const eggImage = require("../assets/egg.png"); // Replace with your egg image path
 
-const NestWithEgg = ({ name, angle }) => {
+const NestWithEgg = ({ name, angle, removeFunc }) => {  
   
   const [isModalVisible, setModalVisible] = useState(false);  
   const eggStyle = {
@@ -15,6 +15,11 @@ const NestWithEgg = ({ name, angle }) => {
   
   const toggleModal = () => {
     setModalVisible(!isModalVisible)
+  }
+
+  const removeEgg = () => {
+    removeFunc()
+    toggleModal()
   }
 
   return (
@@ -32,6 +37,7 @@ const NestWithEgg = ({ name, angle }) => {
     <Modal isVisible={isModalVisible} backdropOpacity={0.3}>
         <View style={styles.modalView}>
         <Text style={styles.modalHeader}>{name}</Text>
+        <Button title="Remove" onPress={removeEgg} />
         <Button title="Done" onPress={toggleModal} />
         </View>
     </Modal>

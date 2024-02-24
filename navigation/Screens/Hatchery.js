@@ -8,6 +8,7 @@ import Modal from "react-native-modal";
 
 const backgroundImage = require("../../assets/dirtbackground.png");
 const { width, height } = Dimensions.get('window');
+let currentID = 0;
 
 const Hatchery = () => {
   const {state, dispatch} = useAppContext();
@@ -19,7 +20,12 @@ const Hatchery = () => {
   const gridSize = 3;
   const nests = Array.from({ length: gridSize * gridSize }).map((_, i) => (
     <View key={i} style={styles.gridItem}>
-      {state.eggs[i] ? <NestWithEgg name={state.eggs[i].name} angle={state.eggs[i].angle} id={i} /> : <EmptyNest />}
+      {state.eggs[i] ? 
+        <NestWithEgg 
+          name={state.eggs[i].name} 
+          angle={state.eggs[i].angle} id={i} 
+          removeFunc={() => { dispatch({ type: "REMOVE_EGG", payload: { id: state.eggs[i].id } })}}
+          /> : <EmptyNest />}
     </View>
   ));
 
@@ -36,8 +42,9 @@ const Hatchery = () => {
     function getRndInteger(min, max) {
       return Math.floor(Math.random() * (max - min) ) + min;
     }
-    dispatch({ type: "ADD_EGG", payload: { name: name, angle: getRndInteger(-15, 15)} })
+    dispatch({ type: "ADD_EGG", payload: { id: currentID, name: name, angle: getRndInteger(-15, 15)} })
     toggleModal()
+    currentID = currentID + 1;
   }
 
   return (
