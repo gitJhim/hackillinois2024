@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'white',
         flexDirection: 'row',
-        overflow: 'scroll',
     },
     petListDetails: {
     },
