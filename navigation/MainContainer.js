@@ -7,13 +7,13 @@ import {View, Image, StyleSheet} from 'react-native';
 import HomeScreen from './Screens/HomeScreen';
 import DetailsScreen from './Screens/DetailsScreen';
 import SettingScreen from './Screens/SettingScreen';
-import EggScreen from './Screens/EggScreen';
-import { Title } from 'react-native-paper';
 
-const homeName = "Garden";
-const detailsName = "Details";
-const settingsName = "User";
-const eggName = "Egg";
+import Hatchery from './Screens/Hatchery';
+import Garden from './Screens/Garden';
+
+const homeName = "Hatchery";
+const detailsName = "Garden";
+const settingsName = "Settings";
 
 const eggImg = require("../assets/egg-outline.png");
 const eggImgFilled = require("../assets/egg-filled.png");
@@ -31,8 +31,9 @@ function MainContainer() {
         notification: '#000000'
     },
   };
+
   return (
-    <NavigationContainer theme={nTheme} >
+    <NavigationContainer theme={nTheme} navigationOptions= {navigationOptions}>
       <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
@@ -63,10 +64,9 @@ function MainContainer() {
         }
         )}
         >
-        
-        <Tab.Screen name={eggName} component={EggScreen} style={color= "white"}/>
-        <Tab.Screen name={homeName} component={HomeScreen} />
-        <Tab.Screen name={detailsName} component={DetailsScreen} />
+  
+        <Tab.Screen name={homeName} component={Hatchery} />
+        <Tab.Screen name={detailsName} component={Garden} />
         <Tab.Screen name={settingsName} component={SettingScreen} />
 
       </Tab.Navigator>
