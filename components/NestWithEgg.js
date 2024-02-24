@@ -1,6 +1,6 @@
 // NestWithEgg.js
 import React, {useState} from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Button, TextInput, Image } from 'react-native';
+import { Pressable, View, StyleSheet, TouchableOpacity, Text, Button, TextInput, Image } from 'react-native';
 import Modal from "react-native-modal";
 
 const nestImage = require("../assets/nest.png"); // Replace with your nest image path
@@ -41,9 +41,15 @@ const NestWithEgg = ({ name, angle, removeFunc }) => {
     <Modal isVisible={isModalVisible} backdropOpacity={0.3}>
         <View style={styles.modalView}>
         <Text style={styles.modalHeader}>{name}</Text>
-        <Button title="Hatch Egg!" onPress={removeEgg} />
-        <Button title="Remove" onPress={removeEgg} />
-        <Button title="Done" onPress={toggleModal} />
+        <Pressable style={styles.button} onPress={hatchEgg}>
+          <Text style={styles.text}>Hatch Egg!</Text>
+        </Pressable>
+        <Pressable style={styles.button} onPress={removeEgg}>
+          <Text style={styles.text}>Remove</Text>
+        </Pressable>
+        <Pressable style={styles.button} onPress={toggleModal}>
+          <Text style={styles.text}>Done</Text>
+        </Pressable>
         </View>
     </Modal>
     </>
@@ -76,8 +82,8 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 10,
-    backgroundColor: 'white',
-    borderRadius: 15,
+    backgroundColor: '#4F518C',
+    borderRadius: 4,
     padding: 20,
     shadowColor: '#000',
     shadowOffset: {
@@ -89,11 +95,23 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalHeader: {
-    fontSize: 18,
-    fontVariant: "bold"
+    fontSize: 24,
+    fontVariant: "bold",
+    color: 'white',
   },
   modalContent: {
     alignItems: 'center'
+  },
+  button: {
+    alignItems: 'center',
+    margin: 4,
+    padding: 8,
+    backgroundColor: 'white',
+    borderRadius: 4,
+  },
+  text: {
+    fontSize: 16,
+    color: '#4F518c',
   },
 });
 
