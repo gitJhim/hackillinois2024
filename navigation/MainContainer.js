@@ -11,10 +11,10 @@ import EggScreen from './Screens/EggScreen'
 import Hatchery from './Screens/Hatchery';
 import Garden from './Screens/Garden';
 
-const homeName = "Hatchery";
-const detailsName = "Garden";
-const settingsName = "Settings";
-const eggName = "Egg";
+const eggName = "Hatchery";
+const homeName = "Garden";
+const detailsName = "Details";
+const settingsName = "Profile";
 
 const eggImg = require("../assets/egg-outline.png");
 const eggImgFilled = require("../assets/egg-filled.png");
@@ -26,10 +26,9 @@ function MainContainer() {
     colors: {
         primary: '#FFFFFF',
         background: '#FFFFFF',
-        border: '#FFFFFF',
         color: '#FFFFFF',
         card: '#2C2A4A',
-        notification: '#000000'
+        notification: '#FFFFFF'
     },
   };
 
@@ -42,7 +41,7 @@ function MainContainer() {
             let iconName;
             let rn = route.name;
             
-            if (rn === "Egg") {
+            if (rn === eggName) {
                 if (!focused) {
                     return <Image source={eggImg} style={styles.image}/>
                 } else {return <Image source={eggImgFilled} style={styles.image} />}
@@ -60,15 +59,16 @@ function MainContainer() {
           },
           tabBarInactiveTintColor: "white",
           tabBarActiveTintColor: "white",
-          activeTintColor: '#000000',
-          inactiveTintColor: '#000000'
+          activeTintColor: '#FFFFFF',
+          inactiveTintColor: '#FFFFFF',
         }
         )}
         >
-        <Tab.Screen name={eggName} component={EggScreen} />
-        <Tab.Screen name={homeName} component={Hatchery} />
-        <Tab.Screen name={detailsName} component={Garden} />
-        <Tab.Screen name={settingsName} component={SettingScreen} />
+        
+        <Tab.Screen name={eggName} component={Hatchery} />
+        <Tab.Screen name={homeName} component={Garden} />
+        <Tab.Screen name={detailsName} component={DetailsScreen}/>
+        <Tab.Screen name={settingsName} component={SettingScreen}/>
 
       </Tab.Navigator>
     </NavigationContainer>
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
       width: 30, 
       height: 30,
       resizeMode: 'contain',
+      zIndex: 9
     },
   });
 
