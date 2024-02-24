@@ -16,7 +16,7 @@ const appReducer = (state, action) => {
     case 'REMOVE_EGG':
       return {
         ...state,
-        eggs: state.tasks.filter(eggs => eggs.id !== action.payload),
+        eggs: state.eggs.filter(egg => egg.id !== action.payload.id),
       };
     default:
       return state;
