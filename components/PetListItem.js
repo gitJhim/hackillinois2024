@@ -4,10 +4,10 @@ import {useAppContext} from '../context/AppContext';
 
 const nestImage = require("../assets/nest.png");
 
-const PetListItem = ({name}, {image}) => {
+const PetListItem = ({name, image}) => {
     return <>
-    
-    <Text> Hello, {name}</Text>
+    <Image source={image} style={{width: 100, height: 100}}/>
+    <Text> Hello, my name is {name}, I am {Math.random()}</Text>
     </>;
 };
 
