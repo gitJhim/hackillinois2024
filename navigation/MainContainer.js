@@ -10,8 +10,8 @@ import SettingScreen from './Screens/SettingScreen';
 import Hatchery from './Screens/Hatchery';
 import Garden from './Screens/Garden';
 
-const homeName = "Home";
-const detailsName = "Details";
+const homeName = "Hatchery";
+const detailsName = "Garden";
 const settingsName = "Settings";
 
 const Tab = createBottomTabNavigator();
@@ -23,8 +23,14 @@ function MainContainer() {
         card: '#DABFFF',
     }
   }
+  const navigationOptions = {
+    title: 'Chat',
+    headerStyle: { backgroundColor: 'red' },
+    headerTitleStyle: { color: 'green' },
+  }
+  
   return (
-    <NavigationContainer theme={nTheme} >
+    <NavigationContainer theme={nTheme} navigationOptions= {navigationOptions}>
       <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
