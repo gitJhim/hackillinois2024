@@ -6,7 +6,7 @@ import NestWithEgg from '../../components/NestWithEgg';
 import { useAppContext } from '../../context/AppContext';
 import Modal from "react-native-modal";
 
-const backgroundImage = require("../../assets/dirtbackground.png");
+const backgroundImage = require("../../assets/hatchery-background.png");
 const { width, height } = Dimensions.get('window');
 let currentID = 0;
 
