@@ -8,12 +8,12 @@ import Modal from "react-native-modal";
 
 const backgroundImage = require("../../assets/hatchery-background.png");
 const { width, height } = Dimensions.get('window');
-let currentID = 0;
 
 const Hatchery = () => {
   const {state, dispatch} = useAppContext();
   console.log(state)
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isHatchEggModalVisible, setHatchEggModalVisible] = useState(false);
 
   const [name, onChangeName] = useState('');
 
@@ -34,6 +34,10 @@ const Hatchery = () => {
     setModalVisible(!isModalVisible);
   };
 
+  const toggleHatchingModal = () => {
+    setHatchEggModalVisible(!isHatchEggModalVisible);
+  };
+
   const handlePress = () => {
     toggleModal()
   };
@@ -42,9 +46,18 @@ const Hatchery = () => {
     function getRndInteger(min, max) {
       return Math.floor(Math.random() * (max - min) ) + min;
     }
-    dispatch({ type: "ADD_EGG", payload: { id: currentID, name: name, angle: getRndInteger(-15, 15)} })
+    dispatch({ type: "ADD_EGG", payload: { id: state.currID, name: name, angle: getRndInteger(-15, 15)} })
     toggleModal()
-    currentID = currentID + 1;
+  }
+
+  const hatchEgg = () => {
+    function getRndInteger(min, max) {
+      return Math.floor(Math.random() * (max - min) ) + min;
+    }
+    dispatch({ type: "ADD_PET", 
+      payload: { id: state.currHatching, } 
+    })
+    toggleModal()
   }
 
   return (
@@ -69,6 +82,20 @@ const Hatchery = () => {
                     />
                 </View>
             <Button title="Done" onPress={donePress} />
+            </View>
+        </Modal>
+
+        <Modal isVisible={isHatchEggModalVisible} backdropOpacity={0.3}>
+            <View style={styles.modalView}>
+            <Text style={styles.modalHeader}>Add Egg</Text>
+                <View style={styles.modalContent}>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={onChangeName}
+                        value={name}
+                    />
+                </View>
+            <Button title="Hatch Egg" onPress={hatchEgg} />
             </View>
         </Modal>
 

@@ -23,7 +23,7 @@ const NestWithEgg = ({ name, angle, removeFunc }) => {
   }
 
   const hatchEgg = () => {
-
+    
   }
 
   return (
