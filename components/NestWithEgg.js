@@ -1,11 +1,11 @@
 // NestWithEgg.js
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View, Text } from 'react-native';
 
 const nestImage = require("../assets/nest.png"); // Replace with your nest image path
 const eggImage = require("../assets/egg.png"); // Replace with your egg image path
 
-const NestWithEgg = ({ angle = 0 }) => {
+const NestWithEgg = ({ name, angle = 0 }) => {
   // Style for rotating the egg image
   const eggStyle = {
     transform: [{ rotate: `${angle}deg` }],
@@ -15,6 +15,7 @@ const NestWithEgg = ({ angle = 0 }) => {
     <View style={styles.container}>
       <Image source={nestImage} style={styles.nestImage} />
       <View style={[styles.eggContainer, eggStyle]}>
+        <Text>{name ? name : "womp"}</Text>
         <Image source={eggImage} style={styles.eggImage} />
       </View>
     </View>
