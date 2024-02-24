@@ -7,7 +7,7 @@ export default function EggScreen({navigation}) {
             <Text
             onPress={() => navigation.navigate('Home')}
             >
-                Something
+                Egg
             </Text>
         </View>
     )

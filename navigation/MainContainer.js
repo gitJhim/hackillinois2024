@@ -2,25 +2,31 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {View, Image} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
 
 import HomeScreen from './Screens/HomeScreen';
 import DetailsScreen from './Screens/DetailsScreen';
 import SettingScreen from './Screens/SettingScreen';
+import EggScreen from './Screens/EggScreen';
 
 const homeName = "Home";
 const detailsName = "Details";
-const settingsName = "Settings";
+const settingsName = "User";
+const eggName = "Egg";
 
+const eggImg = require("../assets/egg-outline.png");
+const eggImgFilled = require("../assets/egg-filled.png");
 const Tab = createBottomTabNavigator();
 
 function MainContainer() {
   const nTheme = {
     dark: false,
     colors: {
-        card: '#DABFFF',
-    }
-  }
+        primary: '#000000',
+        text: '#000000',
+        card: '#2C2A4A',
+    },
+  };
   return (
     <NavigationContainer theme={nTheme} >
       <Tab.Navigator
@@ -31,27 +37,34 @@ function MainContainer() {
             let rn = route.name;
             
             if (rn === "Egg") {
-                if (focused) {
-                    <Image source={require('../assets/egg-outline.png')}/>
-                }
+                if (!focused) {
+                    return <Image source={eggImg} style={styles.image}/>
+                } else {return <Image source={eggImgFilled} style={styles.image} />}
             } else if (rn === homeName) {
-              iconName = focused ? 'home' : 'home-outline';
-
+                if (!focused) {
+                    return <Image source={require('../assets/Garden.png')} style={styles.image}/>
+                } else {}
             } else if (rn === detailsName) {
               iconName = focused ? 'list' : 'list-outline';
 
             } else if (rn === settingsName) {
-              iconName = focused ? 'settings' : 'settings-outline';
+              iconName = focused ? 'person' : 'person-outline';
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-        })}
-        tabBarOptions={{
-            activeTintColot: "tomato",
-            inactiveTintColor: "grey",
-        }}
+          tabBarInactiveTintColor: "white",
+          tabBarActiveTintColor: "white",
+          tabBarStyle: [
+            {
+                display: "flex"
+            },
+            null
+          ]
+        }
+        )}
         >
-
+        
+        <Tab.Screen name={eggName} component={EggScreen}/>
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={detailsName} component={DetailsScreen} />
         <Tab.Screen name={settingsName} component={SettingScreen} />
@@ -60,5 +73,13 @@ function MainContainer() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+    image: {
+      width: 30, 
+      height: 30,
+      resizeMode: 'contain',
+    },
+  });
 
 export default MainContainer;
