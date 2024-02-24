@@ -19,9 +19,10 @@ const Hatchery = () => {
   const gridSize = 3;
   const nests = Array.from({ length: gridSize * gridSize }).map((_, i) => (
     <View key={i} style={styles.gridItem}>
-      {state.eggs[i] ? <NestWithEgg name={state.eggs[i]} id={i} /> : <EmptyNest />}
+      {state.eggs[i] ? <NestWithEgg name={state.eggs[i].name} angle={state.eggs[i].angle} id={i} /> : <EmptyNest />}
     </View>
   ));
+
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -32,7 +33,10 @@ const Hatchery = () => {
   };
 
   const donePress = () => {
-    dispatch({ type: "ADD_EGG", payload: name })
+    function getRndInteger(min, max) {
+      return Math.floor(Math.random() * (max - min) ) + min;
+    }
+    dispatch({ type: "ADD_EGG", payload: { name: name, angle: getRndInteger(-15, 15)} })
     toggleModal()
   }
 
