@@ -8,8 +8,9 @@ import HomeScreen from './Screens/HomeScreen';
 import DetailsScreen from './Screens/DetailsScreen';
 import SettingScreen from './Screens/SettingScreen';
 import EggScreen from './Screens/EggScreen';
+import { Title } from 'react-native-paper';
 
-const homeName = "Home";
+const homeName = "Garden";
 const detailsName = "Details";
 const settingsName = "User";
 const eggName = "Egg";
@@ -20,11 +21,14 @@ const Tab = createBottomTabNavigator();
 
 function MainContainer() {
   const nTheme = {
-    dark: false,
+    dark: true,
     colors: {
-        primary: '#000000',
-        text: '#000000',
+        primary: '#FFFFFF',
+        background: '#FFFFFF',
+        border: '#FFFFFF',
+        color: '#FFFFFF',
         card: '#2C2A4A',
+        notification: '#000000'
     },
   };
   return (
@@ -41,9 +45,9 @@ function MainContainer() {
                     return <Image source={eggImg} style={styles.image}/>
                 } else {return <Image source={eggImgFilled} style={styles.image} />}
             } else if (rn === homeName) {
-                if (!focused) {
+                if (focused) {
                     return <Image source={require('../assets/Garden.png')} style={styles.image}/>
-                } else {}
+                } else {return <Image source={require('../assets/Garden-outline.png')} style={styles.image}/>}
             } else if (rn === detailsName) {
               iconName = focused ? 'list' : 'list-outline';
 
@@ -54,17 +58,13 @@ function MainContainer() {
           },
           tabBarInactiveTintColor: "white",
           tabBarActiveTintColor: "white",
-          tabBarStyle: [
-            {
-                display: "flex"
-            },
-            null
-          ]
+          activeTintColor: '#000000',
+          inactiveTintColor: '#000000'
         }
         )}
         >
         
-        <Tab.Screen name={eggName} component={EggScreen}/>
+        <Tab.Screen name={eggName} component={EggScreen} style={color= "white"}/>
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={detailsName} component={DetailsScreen} />
         <Tab.Screen name={settingsName} component={SettingScreen} />
