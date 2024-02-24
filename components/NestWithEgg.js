@@ -2,12 +2,14 @@
 import React, {useState} from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Button, TextInput, Image } from 'react-native';
 import Modal from "react-native-modal";
+import { useAppContext } from '../context/AppContext';
+import { PET_IMAGES } from '../utils/petutils';
 
 const nestImage = require("../assets/nest.png"); // Replace with your nest image path
 const eggImage = require("../assets/hatchery-egg.png"); // Replace with your egg image path
 
-const NestWithEgg = ({ name, angle, removeFunc }) => {  
-  
+const NestWithEgg = ({ id, name, angle, removeFunc, hatchEggFunc }) => {  
+  const {state, dispatch} = useAppContext();
   const [isModalVisible, setModalVisible] = useState(false);  
   const eggStyle = {
     transform: [{ rotate: `${angle}deg` }],
@@ -23,7 +25,9 @@ const NestWithEgg = ({ name, angle, removeFunc }) => {
   }
 
   const hatchEgg = () => {
-    
+    toggleModal()
+    dispatch({ type: "ADD_PET", payload: { id: id, name: name, image: PET_IMAGES[Math.floor(Math.random() * PET_IMAGES.length)] } })  
+    removeEgg()
   }
 
   return (
@@ -41,7 +45,7 @@ const NestWithEgg = ({ name, angle, removeFunc }) => {
     <Modal isVisible={isModalVisible} backdropOpacity={0.3}>
         <View style={styles.modalView}>
         <Text style={styles.modalHeader}>{name}</Text>
-        <Button title="Hatch Egg!" onPress={removeEgg} />
+        <Button title="Hatch Egg!" onPress={hatchEgg} />
         <Button title="Remove" onPress={removeEgg} />
         <Button title="Done" onPress={toggleModal} />
         </View>

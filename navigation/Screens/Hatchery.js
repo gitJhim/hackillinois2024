@@ -21,9 +21,10 @@ const Hatchery = () => {
   const nests = Array.from({ length: gridSize * gridSize }).map((_, i) => (
     <View key={i} style={styles.gridItem}>
       {state.eggs[i] ? 
-        <NestWithEgg 
+        <NestWithEgg
+          id={state.eggs[i].id} 
           name={state.eggs[i].name} 
-          angle={state.eggs[i].angle} id={i} 
+          angle={state.eggs[i].angle} 
           removeFunc={() => { dispatch({ type: "REMOVE_EGG", payload: { id: state.eggs[i].id } })}}
           /> : <EmptyNest />}
     </View>
@@ -32,10 +33,6 @@ const Hatchery = () => {
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
-  };
-
-  const toggleHatchingModal = () => {
-    setHatchEggModalVisible(!isHatchEggModalVisible);
   };
 
   const handlePress = () => {
@@ -51,11 +48,9 @@ const Hatchery = () => {
   }
 
   const hatchEgg = () => {
-    function getRndInteger(min, max) {
-      return Math.floor(Math.random() * (max - min) ) + min;
-    }
+    const egg = state.eggs.find(egg => egg.id === state.currHatching);
     dispatch({ type: "ADD_PET", 
-      payload: { id: state.currHatching, } 
+      payload: { id: state.currHatching, name: egg.name } 
     })
     toggleModal()
   }
@@ -87,7 +82,7 @@ const Hatchery = () => {
 
         <Modal isVisible={isHatchEggModalVisible} backdropOpacity={0.3}>
             <View style={styles.modalView}>
-            <Text style={styles.modalHeader}>Add Egg</Text>
+            <Text style={styles.modalHeader}>Are you sure you want to hatch this egg?</Text>
                 <View style={styles.modalContent}>
                     <TextInput
                         style={styles.input}

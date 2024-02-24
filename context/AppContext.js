@@ -25,7 +25,11 @@ const appReducer = (state, action) => {
     case 'ADD_PET':
       return {
         ...state,
-        eggs: [...state.eggs, action.payload],
+        pets: [...state.pets, action.payload],
+      };
+    case 'SET_HATCHING':
+      return {
+        ...state,
         currHatching: action.payload.id
       };
     default:
