@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import { View, Image, Dimensions } from 'react-native';
+import { View, Image, Dimensions, ImageBackground, StyleSheet } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('window');
+const backgroundImage = require("../../assets/garden-background.png");
+const examplePet = require("../../assets/dragon.png");
 
 const Garden = () => {
   const translateX = useSharedValue(0);
@@ -30,14 +32,26 @@ const Garden = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <Animated.View style={animatedStyle}>
+      <ImageBackground
+        source={backgroundImage}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      >
+        <Animated.View style={animatedStyle}>
         <Image
-          source={{ uri: 'https://placekitten.com/100/100' }} // Replace with your pet image
+          source={examplePet} // Replace with your pet image
           style={{ width: 100, height: 100 }}
         />
       </Animated.View>
+      </ImageBackground>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+  },
+})
 
 export default Garden;
