@@ -1,6 +1,6 @@
 // Hatchery.js
 import React, {useState} from 'react';
-import { View, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, Text, Button, TextInput } from 'react-native';
+import { Pressable, View, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, Text, Button, TextInput } from 'react-native';
 import EmptyNest from '../../components/EmptyNest'; // Ensure the path is correct
 import NestWithEgg from '../../components/NestWithEgg';
 import { useAppContext } from '../../context/AppContext';
@@ -76,7 +76,9 @@ const Hatchery = () => {
                         value={name}
                     />
                 </View>
-            <Button style={styles.menuButton} title="Done" onPress={donePress} />
+                <Pressable style={styles.button} onPress={donePress}>
+                  <Text style={styles.text}>Done</Text>
+                </Pressable>
             </View>
         </Modal>
 
@@ -123,7 +125,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   floatingButton: {
-    backgroundColor: '#007bff', // You can choose any color
+    backgroundColor: '#4F518C', // You can choose any color
     width: 60, // Diameter of the button
     height: 60, // Diameter of the button
     borderRadius: 30, // Half of the width/height to make it a perfect circle
@@ -173,7 +175,16 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     padding: 10,
   },
-  menuButton: {
+  button: {
+    alignItems: 'center',
+    margin: 4,
+    padding: 8,
+    backgroundColor: 'white',
+    borderRadius: 4,
+  },
+  text: {
+    fontSize: 16,
+    color: '#4f518c',
   },
 });
 
