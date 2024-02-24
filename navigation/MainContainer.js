@@ -7,6 +7,7 @@ import {View, Image} from 'react-native';
 import HomeScreen from './Screens/HomeScreen';
 import DetailsScreen from './Screens/DetailsScreen';
 import SettingScreen from './Screens/SettingScreen';
+import Hatchery from './Screens/Hatchery';
 
 const homeName = "Home";
 const detailsName = "Details";
@@ -52,7 +53,7 @@ function MainContainer() {
         }}
         >
 
-        <Tab.Screen name={homeName} component={HomeScreen} />
+        <Tab.Screen name={homeName} component={Hatchery} />
         <Tab.Screen name={detailsName} component={DetailsScreen} />
         <Tab.Screen name={settingsName} component={SettingScreen} />
 
