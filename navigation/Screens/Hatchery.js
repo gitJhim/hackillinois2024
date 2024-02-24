@@ -68,7 +68,7 @@ const Hatchery = () => {
                         value={name}
                     />
                 </View>
-            <Button title="Done" onPress={donePress} />
+            <Button style={styles.menuButton} title="Done" onPress={donePress} />
             </View>
         </Modal>
 
@@ -150,6 +150,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderColor: 'white',
     padding: 10,
+  },
+  menuButton: {
   },
 });
 
