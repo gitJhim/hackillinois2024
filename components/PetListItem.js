@@ -7,12 +7,17 @@ const nestImage = require("../assets/nest.png");
 
 const PetListItem = ({name, image}) => {
     return <>
+
     <View style={styles.petList}>
     <Image source={image} style={styles.image}/>
     <View style={styles.petListDetails}>    
         <Text style={styles.text}>Name: {name}</Text>
         <Text style={styles.text}>Birthday: 7/13/04</Text>
-        <Text style={styles.text}>Status: Happy</Text>
+        {Math.random()>0.4 ? (
+          <Text style={{color: "white"}}>Status: Happy.</Text>
+        ): (
+          <Text style={{color: "white"}}>Status: Hungry</Text>
+        )}
     </View>
 
     </View>
