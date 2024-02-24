@@ -7,7 +7,7 @@ export default function SettingScreen({navigation}) {
             <Text
             onPress={() => navigation.navigate('Home')}
             >
-                Setting
+                User
             </Text>
         </View>
     )

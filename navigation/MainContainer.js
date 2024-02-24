@@ -2,11 +2,12 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {View, Image} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
 
 import HomeScreen from './Screens/HomeScreen';
 import DetailsScreen from './Screens/DetailsScreen';
 import SettingScreen from './Screens/SettingScreen';
+
 import Hatchery from './Screens/Hatchery';
 import Garden from './Screens/Garden';
 
@@ -14,21 +15,23 @@ const homeName = "Hatchery";
 const detailsName = "Garden";
 const settingsName = "Settings";
 
+const eggImg = require("../assets/egg-outline.png");
+const eggImgFilled = require("../assets/egg-filled.png");
 const Tab = createBottomTabNavigator();
 
 function MainContainer() {
   const nTheme = {
-    dark: false,
+    dark: true,
     colors: {
-        card: '#DABFFF',
-    }
-  }
-  const navigationOptions = {
-    title: 'Chat',
-    headerStyle: { backgroundColor: 'red' },
-    headerTitleStyle: { color: 'green' },
-  }
-  
+        primary: '#FFFFFF',
+        background: '#FFFFFF',
+        border: '#FFFFFF',
+        color: '#FFFFFF',
+        card: '#2C2A4A',
+        notification: '#000000'
+    },
+  };
+
   return (
     <NavigationContainer theme={nTheme} navigationOptions= {navigationOptions}>
       <Tab.Navigator
@@ -39,27 +42,29 @@ function MainContainer() {
             let rn = route.name;
             
             if (rn === "Egg") {
-                if (focused) {
-                    <Image source={require('../assets/egg-outline.png')}/>
-                }
+                if (!focused) {
+                    return <Image source={eggImg} style={styles.image}/>
+                } else {return <Image source={eggImgFilled} style={styles.image} />}
             } else if (rn === homeName) {
-              iconName = focused ? 'home' : 'home-outline';
-
+                if (focused) {
+                    return <Image source={require('../assets/Garden.png')} style={styles.image}/>
+                } else {return <Image source={require('../assets/Garden-outline.png')} style={styles.image}/>}
             } else if (rn === detailsName) {
               iconName = focused ? 'list' : 'list-outline';
 
             } else if (rn === settingsName) {
-              iconName = focused ? 'settings' : 'settings-outline';
+              iconName = focused ? 'person' : 'person-outline';
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-        })}
-        tabBarOptions={{
-            activeTintColot: "tomato",
-            inactiveTintColor: "grey",
-        }}
+          tabBarInactiveTintColor: "white",
+          tabBarActiveTintColor: "white",
+          activeTintColor: '#000000',
+          inactiveTintColor: '#000000'
+        }
+        )}
         >
-
+  
         <Tab.Screen name={homeName} component={Hatchery} />
         <Tab.Screen name={detailsName} component={Garden} />
         <Tab.Screen name={settingsName} component={SettingScreen} />
@@ -68,5 +73,13 @@ function MainContainer() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+    image: {
+      width: 30, 
+      height: 30,
+      resizeMode: 'contain',
+    },
+  });
 
 export default MainContainer;

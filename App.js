@@ -8,9 +8,9 @@ import { AppProvider } from './context/AppContext';
 
 function App() {
   return (
-      <AppProvider>
-        <MainContainer/>
-      </AppProvider>
+    <AppProvider>
+      <MainContainer/>
+    </AppProvider>
   );
 }
 
