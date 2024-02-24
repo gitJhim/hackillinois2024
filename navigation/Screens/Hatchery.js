@@ -122,8 +122,8 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 10,
-    backgroundColor: 'white',
-    borderRadius: 15,
+    backgroundColor: '#4F518C',
+    borderRadius: 4,
     padding: 20,
     shadowColor: '#000',
     shadowOffset: {
@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalHeader: {
+    color: 'white',
     fontSize: 18,
     fontVariant: "bold"
   },
@@ -142,9 +143,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   input: {
+    color: 'white',
     height: 40,
     margin: 12,
-    borderWidth: 1,
+    borderWidth: 0,
+    borderBottomWidth: 2,
+    borderColor: 'white',
     padding: 10,
   },
 });
