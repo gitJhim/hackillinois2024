@@ -1,12 +1,12 @@
 // Hatchery.js
 import React, {useState} from 'react';
 import { View, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, Text, Button, TextInput } from 'react-native';
-import EmptyNest from '../components/EmptyNest'; // Ensure the path is correct
-import NestWithEgg from '../components/NestWithEgg';
-import { useAppContext } from '../context/AppContext';
+import EmptyNest from '../../components/EmptyNest'; // Ensure the path is correct
+import NestWithEgg from '../../components/NestWithEgg';
+import { useAppContext } from '../../context/AppContext';
 import Modal from "react-native-modal";
 
-const backgroundImage = require("../assets/dirtbackground.png");
+const backgroundImage = require("../../assets/dirtbackground.png");
 const { width, height } = Dimensions.get('window');
 
 const Hatchery = () => {
