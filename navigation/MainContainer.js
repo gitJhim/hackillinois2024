@@ -8,6 +8,7 @@ import HomeScreen from './Screens/HomeScreen';
 import DetailsScreen from './Screens/DetailsScreen';
 import SettingScreen from './Screens/SettingScreen';
 import EggScreen from './Screens/EggScreen';
+import Hatchery from '../app/Hatchery';
 import { Title } from 'react-native-paper';
 
 const homeName = "Garden";
@@ -25,14 +26,13 @@ function MainContainer() {
     colors: {
         primary: '#FFFFFF',
         background: '#FFFFFF',
-        border: '#FFFFFF',
         color: '#FFFFFF',
         card: '#2C2A4A',
-        notification: '#000000'
+        notification: '#FFFFFF'
     },
   };
   return (
-    <NavigationContainer theme={nTheme} >
+    <NavigationContainer theme={nTheme}>
       <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
@@ -58,17 +58,16 @@ function MainContainer() {
           },
           tabBarInactiveTintColor: "white",
           tabBarActiveTintColor: "white",
-          activeTintColor: '#000000',
-          inactiveTintColor: '#000000'
+          activeTintColor: '#FFFFFF',
+          inactiveTintColor: '#FFFFFF'
         }
         )}
         >
         
-        <Tab.Screen name={eggName} component={EggScreen} style={color= "white"}/>
+        <Tab.Screen name={eggName} component={Hatchery} />
         <Tab.Screen name={homeName} component={HomeScreen} />
-        <Tab.Screen name={detailsName} component={DetailsScreen} />
-        <Tab.Screen name={settingsName} component={SettingScreen} />
-
+        <Tab.Screen name={detailsName} component={DetailsScreen} colors="white"/>
+        <Tab.Screen name={settingsName} component={SettingScreen}/>
       </Tab.Navigator>
     </NavigationContainer>
   );

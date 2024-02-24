@@ -94,15 +94,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   floatingButton: {
-    backgroundColor: '#007bff', // You can choose any color
+    backgroundColor: '#4F518C', // You can choose any color
     width: 60, // Diameter of the button
     height: 60, // Diameter of the button
     borderRadius: 30, // Half of the width/height to make it a perfect circle
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute', // Important to position it over other content
-    bottom: 20, // Distance from the bottom
-    right: 20, // Distance from the right
+    bottom: -5, // Distance from the bottom
+    right: "43%", // Distance from the right
     elevation: 8, // Adds a drop shadow for Android (optional)
     shadowColor: '#000', // iOS shadow
     shadowOffset: { width: 0, height: 2 }, // iOS shadow
