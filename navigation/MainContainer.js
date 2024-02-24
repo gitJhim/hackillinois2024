@@ -7,13 +7,14 @@ import {View, Image, StyleSheet} from 'react-native';
 import HomeScreen from './Screens/HomeScreen';
 import DetailsScreen from './Screens/DetailsScreen';
 import SettingScreen from './Screens/SettingScreen';
-
+import EggScreen from './Screens/EggScreen'
 import Hatchery from './Screens/Hatchery';
 import Garden from './Screens/Garden';
 
 const homeName = "Hatchery";
 const detailsName = "Garden";
 const settingsName = "Settings";
+const eggName = "Egg";
 
 const eggImg = require("../assets/egg-outline.png");
 const eggImgFilled = require("../assets/egg-filled.png");
@@ -33,7 +34,7 @@ function MainContainer() {
   };
 
   return (
-    <NavigationContainer theme={nTheme} navigationOptions= {navigationOptions}>
+    <NavigationContainer theme={nTheme}>
       <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
@@ -64,7 +65,7 @@ function MainContainer() {
         }
         )}
         >
-  
+        <Tab.Screen name={eggName} component={EggScreen} />
         <Tab.Screen name={homeName} component={Hatchery} />
         <Tab.Screen name={detailsName} component={Garden} />
         <Tab.Screen name={settingsName} component={SettingScreen} />
