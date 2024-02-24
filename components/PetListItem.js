@@ -7,7 +7,13 @@ const nestImage = require("../assets/nest.png");
 const PetListItem = ({name, image}) => {
     return <>
     <Image source={image} style={{width: 100, height: 100}}/>
-    <Text> Hello, my name is {name}, I am {Math.random()}</Text>
+    <Text style={{color: "white"}}> Hello, my name is {name}</Text>
+    {Math.random()>0.4 ? (
+        <Text style={{color: "white"}}> I am happy.</Text>
+    ): (
+        <Text style={{color: "white"}}> I am hungry</Text>
+    )}
+
     </>;
 };
 

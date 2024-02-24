@@ -12,7 +12,6 @@ export default function DetailsScreen({navigation}) {
         flex: 1,
         backgroundColor: "#4F518C"
     }}>
-    
     {state.pets.map(pet => (<PetListItem name={pet.name} image={pet.image}/>))}
     </View>
     </>
