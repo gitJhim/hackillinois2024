@@ -7,7 +7,7 @@ import {View, Image, StyleSheet} from 'react-native';
 import HomeScreen from './Screens/HomeScreen';
 import DetailsScreen from './Screens/DetailsScreen';
 import SettingScreen from './Screens/SettingScreen';
-
+import EggScreen from './Screens/EggScreen'
 import Hatchery from './Screens/Hatchery';
 import Garden from './Screens/Garden';
 
@@ -33,8 +33,7 @@ function MainContainer() {
   };
 
   return (
-    
-    <NavigationContainer theme={nTheme} zIndex="-9999">
+    <NavigationContainer theme={nTheme}>
       <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
@@ -70,6 +69,7 @@ function MainContainer() {
         <Tab.Screen name={homeName} component={Garden} />
         <Tab.Screen name={detailsName} component={DetailsScreen}/>
         <Tab.Screen name={settingsName} component={SettingScreen}/>
+
       </Tab.Navigator>
     </NavigationContainer>
   );
