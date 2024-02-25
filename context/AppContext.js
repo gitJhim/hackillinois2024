@@ -33,7 +33,7 @@ const appReducer = (state, action) => {
         ...state,
         currHatching: action.payload.id
       };
-      case 'ADD_TASK_TO_PET':
+    case 'ADD_TASK_TO_PET':
       // Clone the state to avoid direct state mutations
       const newState = { ...state };
 
@@ -50,10 +50,43 @@ const appReducer = (state, action) => {
 
         // Update the pet in the new state
         newState.pets[petIndex] = updatedPet;
-
       }
 
       return {...newState, currTaskId: state.currTaskId + 1};
+
+    case 'TOGGLE_TASK':
+      // Clone the state to avoid direct state mutations
+      const toggleState = { ...state };
+
+      // Find the index of the pet to which the task belongs
+      const togglePetIndex = toggleState.pets.findIndex(pet => pet.id === action.payload.petId);
+
+      // If the pet is found
+      if (togglePetIndex > -1) {
+        // Clone the pet object to avoid direct state mutations
+        const togglePet = { ...toggleState.pets[togglePetIndex] };
+
+        // Find the index of the task to toggle
+        const toggleTaskIndex = togglePet.tasks.findIndex(task => task.id === action.payload.taskId);
+
+        // If the task is found
+        if (toggleTaskIndex > -1) {
+          // Clone the task object to avoid direct state mutations
+          const toggleTask = { ...togglePet.tasks[toggleTaskIndex] };
+
+          // Toggle the completed status of the task
+          toggleTask.completed = !toggleTask.completed;
+
+          // Update the task in the pet's tasks array
+          togglePet.tasks[toggleTaskIndex] = toggleTask;
+        }
+
+        // Update the pet in the new state
+        toggleState.pets[togglePetIndex] = togglePet;
+      }
+
+      return toggleState;
+
     default:
       return state;
   }

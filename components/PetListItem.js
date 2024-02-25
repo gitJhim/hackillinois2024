@@ -3,9 +3,7 @@ import React, { useContext, useState } from 'react';
 import {TextInput, Pressable, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import {useAppContext} from '../context/AppContext';
 import Modal from "react-native-modal";
-
-const nestImage = require("../assets/nest.png");
-
+import TaskItem from './TaskItem';
 
 
 
@@ -27,8 +25,10 @@ const PetListItem = ({name, image, id, tasks}) => {
        toggleModal()
     };
 
+
     const donePress = () => {
         toggleModal()
+        if(taskName === "") return;
         dispatch({
             type: 'ADD_TASK_TO_PET',
             payload: {
@@ -57,11 +57,16 @@ const PetListItem = ({name, image, id, tasks}) => {
             <Text style={styles.pressableText}>New Task</Text>
         </Pressable>
         </View>
-        {isExpanded ? (
+        {isExpanded ? 
+            <>
+            {tasks ?
             <View>
-                {tasks.map(task => (<Text style={styles.text} >{task.description}</Text>))}
-            </View>
-        ): (
+                {tasks.map(task => (<TaskItem key={task.id} petId={id} taskId={task.id} task={task}/>))}
+            </View> :
+            <Text style={styles.listText}>No Tasks!</Text>
+            }
+            </>
+        : (
             <></>
         )}
 
@@ -95,6 +100,11 @@ const styles = StyleSheet.create({
         height: 100,
         resizeMode: 'contain',
     },
+    checkBox: {
+        width: 30,
+        height: 30,
+        resizeMode: 'contain',
+    },
     petList: {
         margin: 8,
         padding: 8,
@@ -108,6 +118,16 @@ const styles = StyleSheet.create({
         color: 'white',
         marginTop: 6,
         marginBottom: 6,
+    },
+    listText: {
+        color: 'white',
+        margin: 8,
+        fontSize: 20,
+    },
+    taskListLineView: {
+      flexDirection: 'row', 
+      margin: 5, 
+      alignItems: 'center',
     },
     button: {
         flex: 1,
