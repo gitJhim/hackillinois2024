@@ -1,15 +1,18 @@
-import * as React from 'react';
+import React, {useEffect, useState} from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {View, Image, StyleSheet} from 'react-native';
-
+import * as SecureStore from 'expo-secure-store';
+import { makeRedirectUri, useAuthRequest, ResponseType } from 'expo-auth-session';
+import {fetchAndStoreAccessToken, fetchUserRepositories} from '../utils/githubutils.js'
 import HomeScreen from './Screens/HomeScreen';
 import DetailsScreen from './Screens/DetailsScreen';
 import SettingScreen from './Screens/SettingScreen';
 import EggScreen from './Screens/EggScreen'
 import Hatchery from './Screens/Hatchery';
 import Garden from './Screens/Garden';
+import { useAppContext } from "../context/AppContext.js";
 
 const homeName = "Hatchery";
 const detailsName = "Garden";
@@ -19,6 +22,20 @@ const eggName = "Egg";
 const eggImg = require("../assets/egg-outline.png");
 const eggImgFilled = require("../assets/egg-filled.png");
 const Tab = createBottomTabNavigator();
+
+async function saveToken(token) {
+  await SecureStore.setItemAsync('githubToken', token);
+}
+
+async function getToken() {
+  return await SecureStore.getItemAsync('githubToken');
+}
+
+const discovery = {
+  authorizationEndpoint: 'https://github.com/login/oauth/authorize',
+  tokenEndpoint: 'https://github.com/login/oauth/access_token',
+  revocationEndpoint: 'https://github.com/settings/connections/applications/' + process.env.CLIENT_ID,
+};
 
 function MainContainer() {
   const nTheme = {
@@ -32,6 +49,60 @@ function MainContainer() {
         notification: '#000000'
     },
   };
+
+  const [isLoggedOn, setIsLoggedOn] = useState(false);
+  const {state, dispatch} = useAppContext();
+  const [request, response, promptAsync] = useAuthRequest(
+    {
+      clientId: process.env.CLIENT_ID,
+      scopes: ['repo', 'user'],
+      redirectUri: makeRedirectUri({
+        scheme: process.env.SCHEME
+      }),
+    },
+    discovery
+  );
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { code } = response.params;
+      fetchAndStoreAccessToken(code).then(() => setIsLoggedOn(true));
+    }
+  }, [response]);
+
+  const initiateLogin = () => {
+    promptAsync();
+  };
+
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = await getToken();
+
+      if (token) {
+        try {
+          const response = await fetch('https://api.github.com/user', {
+            headers: {
+              Authorization: `token ${token}`,
+            },
+          });
+
+          if (response.ok) {
+              const userInfo = await fetchUserRepositories(await SecureStore.getItemAsync('githubToken'));
+              dispatch({ type: "SET_REPOSITORIES", payload: userInfo })
+          } else {
+            await SecureStore.deleteItemAsync('githubToken');
+            initiateLogin()
+          }
+        } catch (error) {
+          console.error('Error validating token: ', error);
+        }
+      } else {
+        initiateLogin()
+      }
+    };
+
+    checkToken();
+  }, []);
 
   return (
     <NavigationContainer theme={nTheme}>
