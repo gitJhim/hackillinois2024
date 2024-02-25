@@ -102,7 +102,7 @@ const NestWithEgg = ({ id, name, angle, removeFunc }) => {
     <Modal isVisible={isRepositoryModalVisible} backdropOpacity={0.3}>
         <View style={styles.modalView}>
         <Text style={styles.modalHeader}>{name}</Text>
-        <Text>What repository do you want to link this pet to?</Text>
+        <Text style={{ fontWeight: '500', marginTop: 10, marginBottom: 10, color: 'white' }}>What repository do you want to link this pet to?</Text>
           <DropDownPicker
             open={open}
             value={value}
@@ -111,6 +111,7 @@ const NestWithEgg = ({ id, name, angle, removeFunc }) => {
             setOpen={setOpen}
             setValue={setValue}
             placeholder={'Choose a repository.'}
+            style={{ marginBottom: 10 }}
           />
           <Pressable style={styles.button} onPress={linkRepositoryAndHatchEgg}>
             <Text style={styles.text}>Confirm</Text>

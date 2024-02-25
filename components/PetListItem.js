@@ -47,7 +47,7 @@ const PetListItem = ({name, image, id, tasks, birthday, mood}) => {
             <View style={styles.petListDetails}>    
                 <Text style={styles.text}>Name: {name}</Text>
                 <Text style={styles.text}>Birthday: {formattedBirthday}</Text>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Text style={styles.text}>Mood: </Text>
                   <Image style={{ width:20, height: 20 }} source={PET_MOODS[mood].image} />
                 </View>
