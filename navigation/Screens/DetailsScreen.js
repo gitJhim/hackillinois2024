@@ -13,9 +13,8 @@ export default function DetailsScreen({navigation}) {
         backgroundColor: "#4F518C"
     }}>
 
-    {state.pets.map(pet => (<PetListItem name={pet.name} image={pet.image} id={pet.id} tasks={pet.tasks} birthday={pet.birthday} mood={pet.mood}/>))}
     <View style={{marginTop: 50}}>
-    {state.pets.map(pet => (<PetListItem name={pet.name} image={pet.image} id={pet.id} tasks={pet.tasks}/>))}
+        {state.pets.map(pet => (<PetListItem name={pet.name} image={pet.image} id={pet.id} tasks={pet.tasks} birthday={pet.birthday} mood={pet.mood}/>))}
     </View>
 
     </ScrollView>
