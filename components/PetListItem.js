@@ -9,7 +9,7 @@ const nestImage = require("../assets/nest.png");
 
 
 
-const PetListItem = ({name, image, id}) => {
+const PetListItem = ({name, image, id, tasks}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
     const [taskName, onChangeName] = useState("");
@@ -59,8 +59,7 @@ const PetListItem = ({name, image, id}) => {
         </View>
         {isExpanded ? (
             <View>
-            <Text style={styles.text}>+ Make pet breathe fire</Text>
-            <Text style={styles.text}>+ Make pet jump</Text>
+                {tasks.map(task => (<Text style={styles.text} >{task.description}</Text>))}
             </View>
         ): (
             <></>
@@ -77,7 +76,7 @@ const PetListItem = ({name, image, id}) => {
                     />
                 </View>
 
-                <Pressable style={styles.button} onPress={donePress}>
+                <Pressable style={styles.doneButton} onPress={donePress}>
                   <Text style={styles.buttonText}>Done</Text>
                 </Pressable>
             </View>
@@ -155,7 +154,7 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     padding: 10,
   },
-  button: {
+  doneButton: {
     alignItems: 'center',
     margin: 4,
     padding: 8,
