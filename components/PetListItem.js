@@ -1,13 +1,17 @@
 // test
 import React, { useContext } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import {useAppContext} from '../context/AppContext';
 
 const nestImage = require("../assets/nest.png");
 
 const PetListItem = ({name, image}) => {
-    return <>
+    const isExpanded=false;
+    const handdlePress = () => {
+        isExpanded=!isExpanded;
+    }
 
+    return <>
     <View style={styles.petList}>
     <Image source={image} style={styles.image}/>
     <View style={styles.petListDetails}>    
@@ -19,7 +23,6 @@ const PetListItem = ({name, image}) => {
           <Text style={{color: "white"}}>Status: Hungry</Text>
         )}
     </View>
-
     </View>
     </>;
 };
