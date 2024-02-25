@@ -139,7 +139,7 @@ function MainContainer() {
         <Tab.Screen name={eggName} component={Hatchery} />
         <Tab.Screen name={homeName} component={Garden} />
         <Tab.Screen name={detailsName} component={DetailsScreen}/>
-        <Tab.Screen name={settingsName} component={SettingScreen}/>
+        <Tab.Screen name={settingsName} component={EggScreen}/>
 
       </Tab.Navigator>
     </NavigationContainer>
