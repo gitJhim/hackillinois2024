@@ -7,7 +7,8 @@ const initialState = {
   currTaskId: 0,
   currHatching: -1,
   eggs: [],
-  pets: []
+  pets: [],
+  userRepositories: []
 };
 
 const appReducer = (state, action) => {
@@ -33,7 +34,9 @@ const appReducer = (state, action) => {
         ...state,
         currHatching: action.payload.id
       };
-    case 'ADD_TASK_TO_PET':
+      
+      case 'ADD_TASK_TO_PET':
+
       // Clone the state to avoid direct state mutations
       const newState = { ...state };
 
@@ -86,6 +89,13 @@ const appReducer = (state, action) => {
       }
 
       return toggleState;
+
+    case 'SET_REPOSITORIES':
+      return {
+        ...state,
+        userRepositories: action.payload
+      };
+
 
     default:
       return state;
