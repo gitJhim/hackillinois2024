@@ -14,10 +14,10 @@ import Hatchery from './Screens/Hatchery';
 import Garden from './Screens/Garden';
 import { useAppContext } from "../context/AppContext.js";
 
-const homeName = "Hatchery";
-const detailsName = "Garden";
-const settingsName = "Settings";
-const eggName = "Egg";
+const eggName = "Hatchery";
+const homeName = "Garden";
+const detailsName = "Details";
+const settingsName = "Profile";
 
 const eggImg = require("../assets/egg-outline.png");
 const eggImgFilled = require("../assets/egg-filled.png");
@@ -41,12 +41,11 @@ function MainContainer() {
   const nTheme = {
     dark: true,
     colors: {
-        primary: '#FFFFFF',
+        primary: '#2C2A4A',
         background: '#FFFFFF',
-        border: '#FFFFFF',
         color: '#FFFFFF',
         card: '#2C2A4A',
-        notification: '#000000'
+        notification: '#FFFFFF'
     },
   };
 
@@ -113,7 +112,7 @@ function MainContainer() {
             let iconName;
             let rn = route.name;
             
-            if (rn === "Egg") {
+            if (rn === eggName) {
                 if (!focused) {
                     return <Image source={eggImg} style={styles.image}/>
                 } else {return <Image source={eggImgFilled} style={styles.image} />}
@@ -129,17 +128,44 @@ function MainContainer() {
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarInactiveTintColor: "white",
-          tabBarActiveTintColor: "white",
-          activeTintColor: '#000000',
-          inactiveTintColor: '#000000'
+          tabBarActiveTintColor: 'white',  // Color for the selected tab's label
+          tabBarInactiveTintColor: 'white',
         }
-        )}
+        )
+      }
+        tabBarOptions={{
+          activeTintColor: '#FFFFFF',
+          inactiveTintColor: '#FFFFFF',
+          style: {
+            backgroundColor: '#2C2A4A',
+          }
+        }}
         >
-        <Tab.Screen name={eggName} component={EggScreen} />
-        <Tab.Screen name={homeName} component={Hatchery} />
-        <Tab.Screen name={detailsName} component={Garden} />
-        <Tab.Screen name={settingsName} component={SettingScreen} />
+        
+        <Tab.Screen name={eggName} component={Hatchery} options={{
+          tabBarLabelStyle: {
+            color: 'white',  // Set the color of the text
+          },
+          headerShown: false,
+        }}/>
+        <Tab.Screen name={homeName} component={Garden} options={{
+          tabBarLabelStyle: {
+            color: 'white',  // Set the color of the text
+          },
+          headerShown: false,
+        }}/>
+        <Tab.Screen name={detailsName} component={DetailsScreen} options={{
+          tabBarLabelStyle: {
+            color: 'white',  // Set the color of the text
+          },
+          headerShown: false,
+        }}/>
+        <Tab.Screen name={settingsName} component={SettingScreen} options={{
+          tabBarLabelStyle: {
+            color: 'white',  // Set the color of the text
+          },
+          headerShown: false,
+        }}/>
 
       </Tab.Navigator>
     </NavigationContainer>
