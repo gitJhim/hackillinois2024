@@ -21,10 +21,8 @@ const Pet = ({ name, image, mood }) => {
 
     // Clamp targetX between 0 and 100
     const targetX = Math.max(-100, Math.min(tx, 100));
-    console.log(targetX)
     // Clamp targetY between 250 and 300
     const targetY = Math.max(250, Math.min(ty, 500));
-    console.log(targetY)
 
     translateX.value = withSpring(targetX, {
       duration: 5000,
@@ -56,8 +54,8 @@ const Pet = ({ name, image, mood }) => {
   return (
     <Animated.View style={animatedStyle}>
       <View style={{ alignItems: 'center' }}>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={{ marginBottom: -10 }}>{name}</Text>
+        <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: 3, borderRadius: 8, flexDirection: 'row' }}>
+          <Text style={{ marginBottom: -10, fontWeight: '800', textAlign: 'center', color: '#FFF', }}>{name}</Text>
           <Image
             source={PET_MOODS[mood].image}
             style={{ width: 20, height: 20, marginLeft: 5 }} />

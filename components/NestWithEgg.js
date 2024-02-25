@@ -59,7 +59,8 @@ const NestWithEgg = ({ id, name, angle, removeFunc }) => {
           repository: value, 
           image: PET_IMAGES[Math.floor(Math.random() * PET_IMAGES.length)],
           commits: commits,
-          mood: mood
+          mood: mood,
+          birthday: Date.now()
         } 
       });
   
@@ -77,7 +78,7 @@ const NestWithEgg = ({ id, name, angle, removeFunc }) => {
       <TouchableOpacity onPress={toggleModal}>
         <Image source={nestImage} style={styles.nestImage} />
         <View style={[styles.eggContainer]}>
-            <Text>{name ? name : "womp"}</Text>
+            <Text style={{ fontWeight: '800', textAlign: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: 3, borderRadius: 8, color: '#FFF' }}>{name ? name : "womp"}</Text>
             <Image source={eggImage} style={styles.eggImage} />
         </View>
       </TouchableOpacity>
@@ -85,7 +86,7 @@ const NestWithEgg = ({ id, name, angle, removeFunc }) => {
 
     <Modal isVisible={isModalVisible} backdropOpacity={0.3}>
         <View style={styles.modalView}>
-        <Text style={styles.modalHeader}>{name}</Text>
+        <Text style={styles.modalHeader}>{name ? name : "womp"}</Text>
           <Pressable style={styles.button} onPress={hatchEgg}>
             <Text style={styles.text}>Hatch Egg!</Text>
           </Pressable>
@@ -141,6 +142,8 @@ const styles = StyleSheet.create({
     height: '50%', // Adjust based on your egg image size relative to the nest
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: '13%',
+    marginBottom: '10%'
   },
   eggImage: {
     width: '100%',

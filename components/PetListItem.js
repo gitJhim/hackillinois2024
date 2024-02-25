@@ -4,15 +4,16 @@ import {TextInput, Pressable, View, Text, Image, StyleSheet, TouchableOpacity } 
 import {useAppContext} from '../context/AppContext';
 import Modal from "react-native-modal";
 import TaskItem from './TaskItem';
+import { PET_MOODS } from '../utils/petutils';
 
 
 
-const PetListItem = ({name, image, id, tasks}) => {
+const PetListItem = ({name, image, id, tasks, birthday, mood}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
     const [taskName, onChangeName] = useState("");
     const {state, dispatch} = useAppContext();
-
+    const formattedBirthday = new Date(birthday).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' });
     const handleExpansion = () => {
         setIsExpanded(!isExpanded);
     }
@@ -45,12 +46,11 @@ const PetListItem = ({name, image, id, tasks}) => {
             <Image source={image} style={styles.image}/>
             <View style={styles.petListDetails}>    
                 <Text style={styles.text}>Name: {name}</Text>
-                <Text style={styles.text}>Birthday: 7/13/04</Text>
-                {Math.random()>0.4 ? (
-                  <Text style={styles.text}>Status: Happy</Text>
-                ): (
-                  <Text style={styles.text}>Status: Hungry</Text>
-                )}
+                <Text style={styles.text}>Birthday: {formattedBirthday}</Text>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={styles.text}>Mood: </Text>
+                  <Image style={{ width:20, height: 20 }} source={PET_MOODS[mood].image} />
+                </View>
             </View>
         </Pressable>
         <Pressable style={styles.button} onPress={handlePress}>
