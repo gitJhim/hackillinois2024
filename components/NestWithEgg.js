@@ -4,19 +4,24 @@ import { Pressable, View, StyleSheet, TouchableOpacity, Text, Button, TextInput,
 import Modal from "react-native-modal";
 import { useAppContext } from '../context/AppContext';
 import { PET_IMAGES } from '../utils/petutils';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const nestImage = require("../assets/nest.png"); // Replace with your nest image path
 const eggImage = require("../assets/hatchery-egg.png"); // Replace with your egg image path
 
-const NestWithEgg = ({ id, name, angle, removeFunc, hatchEggFunc }) => {  
+const NestWithEgg = ({ id, name, angle, removeFunc }) => {  
   const {state, dispatch} = useAppContext();
-  const [isModalVisible, setModalVisible] = useState(false);  
-  const eggStyle = {
-    transform: [{ rotate: `${angle}deg` }],
-  };
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isRepositoryModalVisible, setIsRepositoryModalVisible] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);  
   
   const toggleModal = () => {
     setModalVisible(!isModalVisible)
+  }
+
+  const toggleRepositoryModal = () => {
+    setIsRepositoryModalVisible(!isRepositoryModalVisible)
   }
 
   const removeEgg = () => {
@@ -25,8 +30,13 @@ const NestWithEgg = ({ id, name, angle, removeFunc, hatchEggFunc }) => {
   }
 
   const hatchEgg = () => {
-    toggleModal()
-    dispatch({ type: "ADD_PET", payload: { id: id, name: name, image: PET_IMAGES[Math.floor(Math.random() * PET_IMAGES.length)] } })  
+    setModalVisible(false); // Directly close the initial modal
+    setIsRepositoryModalVisible(true); // Directly open the repository modal
+  }
+
+  const linkRepositoryAndHatchEgg = () => {
+    dispatch({ type: "ADD_PET", payload: { id: id, name: name, repository: value, image: PET_IMAGES[Math.floor(Math.random() * PET_IMAGES.length)] } })
+    toggleRepositoryModal()
     removeEgg()
   }
 
@@ -35,7 +45,7 @@ const NestWithEgg = ({ id, name, angle, removeFunc, hatchEggFunc }) => {
     <View style={styles.container}>
       <TouchableOpacity onPress={toggleModal}>
         <Image source={nestImage} style={styles.nestImage} />
-        <View style={[styles.eggContainer, eggStyle]}>
+        <View style={[styles.eggContainer]}>
             <Text>{name ? name : "womp"}</Text>
             <Image source={eggImage} style={styles.eggImage} />
         </View>
@@ -53,6 +63,27 @@ const NestWithEgg = ({ id, name, angle, removeFunc, hatchEggFunc }) => {
           </Pressable>
           <Pressable style={styles.button} onPress={toggleModal}>
             <Text style={styles.text}>Done</Text>
+          </Pressable>
+        </View>
+    </Modal>
+
+    <Modal isVisible={isRepositoryModalVisible} backdropOpacity={0.3}>
+        <View style={styles.modalView}>
+        <Text style={styles.modalHeader}>{name}</Text>
+        <Text>What repository do you want to link this pet to?</Text>
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={state.userRepositories}
+            setOpen={setOpen}
+            setValue={setValue}
+            placeholder={'Choose a repository.'}
+          />
+          <Pressable style={styles.button} onPress={linkRepositoryAndHatchEgg}>
+            <Text style={styles.text}>Confirm</Text>
+          </Pressable>
+          <Pressable style={styles.button} onPress={toggleModal}>
+            <Text style={styles.text}>Cancel</Text>
           </Pressable>
         </View>
     </Modal>
