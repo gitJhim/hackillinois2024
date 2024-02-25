@@ -11,9 +11,7 @@ const { width, height } = Dimensions.get('window');
 
 const Hatchery = () => {
   const {state, dispatch} = useAppContext();
-  console.log(state)
   const [isModalVisible, setModalVisible] = useState(false);
-  const [isHatchEggModalVisible, setHatchEggModalVisible] = useState(false);
 
   const [name, onChangeName] = useState('');
 
@@ -79,20 +77,6 @@ const Hatchery = () => {
                 <Pressable style={styles.button} onPress={donePress}>
                   <Text style={styles.text}>Done</Text>
                 </Pressable>
-            </View>
-        </Modal>
-
-        <Modal isVisible={isHatchEggModalVisible} backdropOpacity={0.3}>
-            <View style={styles.modalView}>
-            <Text style={styles.modalHeader}>Are you sure you want to hatch this egg?</Text>
-                <View style={styles.modalContent}>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={onChangeName}
-                        value={name}
-                    />
-                </View>
-            <Button title="Hatch Egg" onPress={hatchEgg} />
             </View>
         </Modal>
 

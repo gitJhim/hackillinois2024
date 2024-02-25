@@ -6,7 +6,8 @@ const initialState = {
   currID: 0,
   currHatching: -1,
   eggs: [],
-  pets: []
+  pets: [],
+  userRepositories: []
 };
 
 const appReducer = (state, action) => {
@@ -31,6 +32,11 @@ const appReducer = (state, action) => {
       return {
         ...state,
         currHatching: action.payload.id
+      };
+    case 'SET_REPOSITORIES':
+      return {
+        ...state,
+        userRepositories: action.payload
       };
     default:
       return state;

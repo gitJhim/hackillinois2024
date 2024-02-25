@@ -65,6 +65,7 @@ const Pet = ({ image }) => {
 const Garden = () => {
   const {state, dispatch} = useAppContext();
   const pets = state.pets
+  console.log(pets)
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
