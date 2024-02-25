@@ -45,14 +45,6 @@ const Hatchery = () => {
     toggleModal()
   }
 
-  const hatchEgg = () => {
-    const egg = state.eggs.find(egg => egg.id === state.currHatching);
-    dispatch({ type: "ADD_PET", 
-      payload: { id: state.currHatching, name: egg.name } 
-    })
-    toggleModal()
-  }
-
   return (
     <View style={styles.container}>
       <ImageBackground

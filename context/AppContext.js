@@ -38,6 +38,7 @@ const appReducer = (state, action) => {
         ...state,
         userRepositories: action.payload
       };
+
     default:
       return state;
   }

@@ -1,50 +1,48 @@
-import React, { useEffect } from 'react';
-import { View, Image, Dimensions, ImageBackground, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Image, Dimensions, ImageBackground, StyleSheet, Text } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withRepeat, withSequence  } from 'react-native-reanimated';
 import { useAppContext } from '../../context/AppContext';
+import { PET_MOODS } from '../../utils/petutils';
 
 const { width, height } = Dimensions.get('window');
 const backgroundImage = require("../../assets/garden-background.png");
 
-const Pet = ({ image }) => {
-  const translateX = useSharedValue(0);
-  const translateY = useSharedValue(height / 2);
-  const rotateZ = useSharedValue(0); // rotation value for wiggling
+const Pet = ({ name, image, mood }) => {
+  const petWidth = 100;
+  const petHeight = 100;
 
-  // Initial target setting
-  let targetX = Math.random() * (width - 100);
-  let targetY = Math.random() * ((height / 2 - 100) - 100) + height / 2;
+  const translateX = useSharedValue(0);
+  const translateY = useSharedValue(height / 2); // Center vertically in the play area
+  const rotateZ = useSharedValue(0);
 
   const movePetRandomly = () => {
-    // Set new target positions
-    targetX = Math.random() * (width - 100);
-    targetY = Math.random() * ((height / 2 - 100) - 100) + height / 2;
+    const tx = Math.random() * 200 - 100; // Random value between -100 and 100
+    const ty = Math.random() * (500 - 250 + 1) + 250; // Random value between 250 and 400
 
-    // Move to the new target
+    // Clamp targetX between 0 and 100
+    const targetX = Math.max(-100, Math.min(tx, 100));
+    console.log(targetX)
+    // Clamp targetY between 250 and 300
+    const targetY = Math.max(250, Math.min(ty, 500));
+    console.log(targetY)
+
     translateX.value = withSpring(targetX, {
-      duration: 10000,
+      duration: 5000,
       damping: 20,
       stiffness: 50,
     });
 
     translateY.value = withSpring(targetY, {
-      duration: 10000,
+      duration: 5000,
       damping: 20,
       stiffness: 50,
     });
   };
-
+    
   useEffect(() => {
     movePetRandomly();
-    // Start wiggle rotation
-    rotateZ.value = withRepeat(withSequence(
-      withSpring(-5, { damping: 20, stiffness: 50 }), // Rotate slightly left
-      withSpring(5, { damping: 20, stiffness: 50 })  // Rotate slightly right
-    ), -1, true); // Infinite repeat with autoreverse
-
-    // Change position less frequently to maintain a straight line movement
-    const positionInterval = setInterval(movePetRandomly, 5000);
-    return () => clearInterval(positionInterval);
+    const intervalId = setInterval(movePetRandomly, 5000);
+    return () => clearInterval(intervalId);
   }, []);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -57,7 +55,15 @@ const Pet = ({ image }) => {
 
   return (
     <Animated.View style={animatedStyle}>
-      <Image source={image} style={{ width: 100, height: 100 }} />
+      <View style={{ alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={{ marginBottom: -10 }}>{name}</Text>
+          <Image
+            source={PET_MOODS[mood].image}
+            style={{ width: 20, height: 20, marginLeft: 5 }} />
+        </View>
+        <Image source={image} style={{width: petWidth, height: petHeight}} />
+      </View>
     </Animated.View>
   );
 };
@@ -74,7 +80,7 @@ const Garden = () => {
         resizeMode="cover"
       >
         {pets.map((pet, index) => (
-          <Pet key={index} image={pet.image} />
+          <Pet key={index} image={pet.image} name={pet.name} mood={pet.mood}/>
         ))}
       </ImageBackground>
     </View>
