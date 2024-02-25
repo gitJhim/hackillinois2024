@@ -3,8 +3,10 @@ import React, {useState} from 'react';
 import { Pressable, View, StyleSheet, TouchableOpacity, Text, Button, TextInput, Image } from 'react-native';
 import Modal from "react-native-modal";
 import { useAppContext } from '../context/AppContext';
-import { PET_IMAGES } from '../utils/petutils';
+import { PET_IMAGES, PET_MOODS } from '../utils/petutils';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { fetchGitHubUsername, fetchRepositoryCommits, moodBasedOnCommits } from '../utils/githubutils';
+import * as SecureStore from 'expo-secure-store';
 
 const nestImage = require("../assets/nest.png"); // Replace with your nest image path
 const eggImage = require("../assets/hatchery-egg.png"); // Replace with your egg image path
@@ -34,11 +36,40 @@ const NestWithEgg = ({ id, name, angle, removeFunc }) => {
     setIsRepositoryModalVisible(true); // Directly open the repository modal
   }
 
-  const linkRepositoryAndHatchEgg = () => {
-    dispatch({ type: "ADD_PET", payload: { id: id, name: name, repository: value, image: PET_IMAGES[Math.floor(Math.random() * PET_IMAGES.length)] } })
-    toggleRepositoryModal()
-    removeEgg()
-  }
+  const linkRepositoryAndHatchEgg = async () => {
+    try {
+      const token = await SecureStore.getItemAsync('githubToken');
+      if (!token) throw new Error('GitHub token is not available.');
+  
+      // Assuming id, name, and value are available in the scope. If not, they need to be passed as arguments.
+      const username = await fetchGitHubUsername(token);
+      if (!username) throw new Error('Failed to fetch GitHub username.');
+  
+      const commits = await fetchRepositoryCommits(token, username, value);
+      console.log(commits)
+      if (!commits) throw new Error('Failed to fetch repository commits.');
+
+      const mood = await moodBasedOnCommits(commits);
+
+      dispatch({ 
+        type: "ADD_PET", 
+        payload: { 
+          id: id, 
+          name: name, 
+          repository: value, 
+          image: PET_IMAGES[Math.floor(Math.random() * PET_IMAGES.length)],
+          commits: commits,
+          mood: mood
+        } 
+      });
+  
+      toggleRepositoryModal();
+      removeEgg();
+    } catch (error) {
+      console.error('Error linking repository and hatching egg:', error);
+      // Handle the error appropriately (e.g., display an error message)
+    }
+  };
 
   return (
     <>
@@ -75,6 +106,7 @@ const NestWithEgg = ({ id, name, angle, removeFunc }) => {
             open={open}
             value={value}
             items={state.userRepositories}
+            max={30}
             setOpen={setOpen}
             setValue={setValue}
             placeholder={'Choose a repository.'}

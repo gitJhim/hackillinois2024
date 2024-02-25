@@ -54,7 +54,7 @@ function MainContainer() {
   const [request, response, promptAsync] = useAuthRequest(
     {
       clientId: process.env.CLIENT_ID,
-      scopes: ['repo', 'user'],
+      scopes: ['repo', 'user', 'identity'],
       redirectUri: makeRedirectUri({
         scheme: process.env.SCHEME
       }),

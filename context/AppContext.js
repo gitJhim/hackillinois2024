@@ -96,7 +96,6 @@ const appReducer = (state, action) => {
         userRepositories: action.payload
       };
 
-
     default:
       return state;
   }
