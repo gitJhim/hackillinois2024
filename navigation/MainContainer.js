@@ -41,7 +41,7 @@ function MainContainer() {
   const nTheme = {
     dark: true,
     colors: {
-        primary: '#FFFFFF',
+        primary: '#2C2A4A',
         background: '#FFFFFF',
         color: '#FFFFFF',
         card: '#2C2A4A',
@@ -128,18 +128,44 @@ function MainContainer() {
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarInactiveTintColor: "white",
-          tabBarActiveTintColor: "white",
+          tabBarActiveTintColor: 'white',  // Color for the selected tab's label
+          tabBarInactiveTintColor: 'white',
+        }
+        )
+      }
+        tabBarOptions={{
           activeTintColor: '#FFFFFF',
           inactiveTintColor: '#FFFFFF',
-        }
-        )}
+          style: {
+            backgroundColor: '#2C2A4A',
+          }
+        }}
         >
         
-        <Tab.Screen name={eggName} component={Hatchery} />
-        <Tab.Screen name={homeName} component={Garden} />
-        <Tab.Screen name={detailsName} component={DetailsScreen}/>
-        <Tab.Screen name={settingsName} component={EggScreen}/>
+        <Tab.Screen name={eggName} component={Hatchery} options={{
+          tabBarLabelStyle: {
+            color: 'white',  // Set the color of the text
+          },
+          headerShown: false,
+        }}/>
+        <Tab.Screen name={homeName} component={Garden} options={{
+          tabBarLabelStyle: {
+            color: 'white',  // Set the color of the text
+          },
+          headerShown: false,
+        }}/>
+        <Tab.Screen name={detailsName} component={DetailsScreen} options={{
+          tabBarLabelStyle: {
+            color: 'white',  // Set the color of the text
+          },
+          headerShown: false,
+        }}/>
+        <Tab.Screen name={settingsName} component={SettingScreen} options={{
+          tabBarLabelStyle: {
+            color: 'white',  // Set the color of the text
+          },
+          headerShown: false,
+        }}/>
 
       </Tab.Navigator>
     </NavigationContainer>
@@ -151,7 +177,6 @@ const styles = StyleSheet.create({
       width: 30, 
       height: 30,
       resizeMode: 'contain',
-      zIndex: 9
     },
   });
 
