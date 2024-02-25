@@ -54,6 +54,34 @@ const appReducer = (state, action) => {
       }
 
       return {...newState, currTaskId: state.currTaskId + 1};
+
+    case 'TOGGLE_TASK':
+      // Clone the state to avoid direct state mutations
+      const newState2 = { ...state };
+
+      // Find the index of the pet to which the task should be added
+      const petIndex2 = newState2.pets.findIndex(pet => pet.id === action.payload.petId);
+      
+      // If the pet is found
+      if (petIndex2 > -1) {
+        // Clone the pet object to avoid direct state mutations
+        const updatedPet2 = { ...newState2.pets[petIndex2] };
+
+        // Add the task to the pet's tasks array
+        updatedPet2.tasks = updatedPet2.tasks.map(task => {
+          if (task.id === action.payload.taskId) {
+            task.completed = !task.completed;
+          }
+          return task;
+        });
+
+        // Update the pet in the new state
+        newState2.pets[petIndex2] = updatedPet2;
+
+      }
+
+      return newState2;
+      
     default:
       return state;
   }

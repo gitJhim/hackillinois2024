@@ -6,14 +6,21 @@ import Modal from "react-native-modal";
 
 const nestImage = require("../assets/nest.png");
 
-
-
-
 const PetListItem = ({name, image, id, tasks}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
     const [taskName, onChangeName] = useState("");
     const {state, dispatch} = useAppContext();
+
+    const handleComplete = () => {
+        dispatch({
+            type: 'TOGGLE_TASK',
+            payload: {
+                petId: id, // ID of the pet to which the task belongs
+                taskId: id // ID of the task to be toggled
+            }
+        });
+    }
 
     const handleExpansion = () => {
         setIsExpanded(!isExpanded);
@@ -59,7 +66,15 @@ const PetListItem = ({name, image, id, tasks}) => {
         </View>
         {isExpanded ? (
             <View>
-                {tasks.map(task => (<Text style={styles.text} >{task.description}</Text>))}
+                {tasks ? 
+                  (tasks.map(task => (<>
+                  <Pressable style = {{flexDirection: "row"}} onPress={handleComplete(task.id)}>
+                  {tasks.completed ? 
+                  (<Image source={require('../assets/checkbox.png')} style={{width: 30, height:30, margin: 8}}/>) : 
+                  (<Image source={require('../assets/box.png')} style={{width: 30, height:30, margin: 5}}/>)}
+                  <Text style={styles.text}> {task.description}</Text>
+                  </Pressable></>))) : 
+                  (<Text style={styles.text}>No Task</Text>)}
             </View>
         ): (
             <></>
